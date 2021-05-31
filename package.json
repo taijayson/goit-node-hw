@@ -1,0 +1,22 @@
+{
+  "name": "goit-node-hw",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/taijayson/goit-node-hw.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/taijayson/goit-node-hw/issues"
+  },
+  "homepage": "https://github.com/taijayson/goit-node-hw#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
