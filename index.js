@@ -11,8 +11,8 @@ program.parse(process.argv);
 
 const argv = program.opts();
 
-const path = require("path");
-const contactsPath = path.join(__dirname, "db", "contacts.json");
+// const path = require("path");
+// const contactsPath = path.join(__dirname, "db", "contacts.json");
 
 const {
   listContacts,
@@ -25,7 +25,7 @@ const {
 const invokeAction = ({ action, id, name, email, phone }) => {
   switch (action) {
     case "list":
-      listContacts(contactsPath);
+      listContacts();
       //   console.log(contactsPath);
       //   console.log("list");
       break;

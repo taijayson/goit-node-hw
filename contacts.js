@@ -18,7 +18,7 @@ const listContacts = async (filePath) => {
   }
 };
 
-console.log(listContacts(contactsPath));
+listContacts(contactsPath);
 
 const getContactById = async (contactId, filePath) => {
   try {
