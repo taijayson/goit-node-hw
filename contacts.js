@@ -47,7 +47,7 @@ const addContact = async (id, name, email, phone, filePath) => {
     };
     data.push(newItem);
     fs.writeFile(filePath, JSON.stringify(data));
-    console.log(data);
+    // console.log(data);
   } catch (err) {
     throw err;
   }
