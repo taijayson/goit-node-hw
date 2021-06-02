@@ -8,21 +8,23 @@ const contactsPath = path.join(__dirname, "db", "contacts.json");
 
 //===============GET CONTACTS==============//
 
-const listContacts = async (filePath) => {
+const listContacts = async () => {
   try {
-    const data = await fs.readFile(filePath).then((data) => JSON.parse(data));
-    console.log(data);
+    const data = await fs
+      .readFile(contactsPath)
+      .then((data) => JSON.parse(data));
+    // console.log(data);
     return data;
   } catch (err) {
     throw err;
   }
 };
 
-listContacts(contactsPath);
+// listContacts();
 
-const getContactById = async (contactId, filePath) => {
+const getContactById = async (contactId) => {
   try {
-    const data = await listContacts(filePath);
+    const data = await listContacts();
     // console.log(data);
     const find = data.find((item) => item.id === contactId);
     // console.log(find);
@@ -32,13 +34,13 @@ const getContactById = async (contactId, filePath) => {
   }
 };
 
-// console.log(getContactById("3", contactsPath));
+// getContactById("3");
 
 //===============ADD AND REMOVE CONTACTS==============//
 
-const addContact = async (id, name, email, phone, filePath) => {
+const addContact = async (id, name, email, phone) => {
   try {
-    const data = await listContacts(filePath);
+    const data = await listContacts();
     const newItem = {
       id: id,
       name: name,
@@ -46,30 +48,28 @@ const addContact = async (id, name, email, phone, filePath) => {
       phone: phone,
     };
     data.push(newItem);
-    fs.writeFile(filePath, JSON.stringify(data));
+    fs.writeFile(contactsPath, JSON.stringify(data));
     // console.log(data);
   } catch (err) {
     throw err;
   }
 };
 
-// console.log(
-//     addContact("4", "Shang Csung", "shang@mail.com", "0555555555", contactsPath),
-//   addContact("5", "Kung Lao", "lao@mail.com", "06666666666", contactsPath)
-// );
+// addContact("4", "Shang Csung", "shang@mail.com", "0555555555");
+// addContact("5", "Kung Lao", "lao@mail.com", "06666666666");
 
-const removeContact = async (contactId, filePath) => {
+const removeContact = async (contactId) => {
   try {
-    const data = await listContacts(filePath);
+    const data = await listContacts();
     const newData = data.filter(({ id }) => id !== contactId);
-    fs.writeFile(filePath, JSON.stringify(newData));
+    fs.writeFile(contactsPath, JSON.stringify(newData));
     // console.log(data);
   } catch (err) {
     throw err;
   }
 };
 
-// console.log(removeContact("5", contactsPath));
+// removeContact("4");
 
 module.exports = {
   listContacts,
