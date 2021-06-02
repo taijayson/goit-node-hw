@@ -11,10 +11,6 @@ program.parse(process.argv);
 
 const argv = program.opts();
 
-// const path = require("path");
-// const contactsPath = path.join(__dirname, "db", "contacts.json");
-// console.log(contactsPath);
-
 const {
   listContacts,
   getContactById,
@@ -22,8 +18,6 @@ const {
   removeContact,
 } = require("./contacts");
 
-// const contactsList = listContacts(contactsPath);
-// TODO: рефакторить
 const invokeAction = ({ action, id, name, email, phone }) => {
   switch (action) {
     case "list":
@@ -31,15 +25,12 @@ const invokeAction = ({ action, id, name, email, phone }) => {
       break;
     case "get":
       getContactById(id).then((contact) => console.log(contact));
-      //   console.log("id", id);
       break;
     case "add":
       addContact(id, name, email, phone);
-      //   console.log("name email phone", name, email, phone);
       break;
     case "remove":
       removeContact(id);
-      //   console.log("id", id);
       break;
     default:
       console.warn("\x1B[31m Unknown action type");
