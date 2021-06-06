@@ -11,7 +11,7 @@ const listContacts = async (req, res, next) => {
     const data = await fs
       .readFile(contactsPath)
       .then((data) => JSON.parse(data));
-    // console.log(data);
+    // console.log(req.params);
     res.json({
       status: "success",
       code: 200,
@@ -26,10 +26,12 @@ const listContacts = async (req, res, next) => {
 };
 // listContacts();
 const getContactById = async (req, res, next, contactId) => {
+  // console.log(req);
   try {
+    const { id } = req.params;
     const data = await listContacts();
-    const { contactId } = req.params;
-    const find = data.find((item) => item.id === contactId);
+    // console.log(data);
+    const find = data.find((item) => item.id === id);
     if (!find) {
       return res.status(404).json({
         status: "error",
