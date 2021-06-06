@@ -16,7 +16,7 @@ const {
   getContactById,
   addContact,
   removeContact,
-} = require(".");
+} = require("./index");
 
 const invokeAction = ({ action, id, name, email, phone }) => {
   switch (action) {
