@@ -25,27 +25,27 @@ const listContacts = async (req, res, next) => {
   }
 };
 // listContacts();
-const getContactById = async (req, res, next, contactId) => {
-  console.log(contactId);
+const getContactById = async (contactId, req, res, next) => {
+  // console.log(contactId);
   try {
-    // const { id } = req.params;
+    const { id } = req.params;
     const data = await listContacts();
-    // console.log(data);
-    const find = data.find((item) => item.id === contactId);
-    // if (!find) {
-    //   return res.status(404).json({
-    //     status: "error",
-    //     code: 404,
-    //     message: "Not found",
-    //   });
-    // }
-    // res.json({
-    //   status: "success",
-    //   code: 200,
-    //   data: {
-    //     find,
-    //   },
-    // });
+    console.log(data);
+    const find = data.find((item) => item.id === id);
+    if (!find) {
+      return res.status(404).json({
+        status: "error",
+        code: 404,
+        message: "Not found",
+      });
+    }
+    res.json({
+      status: "success",
+      code: 200,
+      data: {
+        find,
+      },
+    });
     console.log(find);
     return find;
   } catch (err) {
