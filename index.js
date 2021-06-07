@@ -6,47 +6,25 @@ const contactsPath = path.join(__dirname, "db", "contacts.json");
 
 //===============GET CONTACTS==============//
 
-const listContacts = async (req, res, next) => {
+const listContacts = async () => {
   try {
     const data = await fs
       .readFile(contactsPath)
       .then((data) => JSON.parse(data));
-    // console.log(req.params);
-    // res.json({
-    //   status: "success",
-    //   code: 200,
-    //   data: {
-    //     result: data,
-    //   },
-    // });
     return data;
   } catch (err) {
     throw err;
   }
 };
-// listContacts();
-const getContactById = async (contactId, req, res, next) => {
-  // console.log(contactId);
+
+const getContactById = async (contactId) => {
+  console.log(contactId);
   try {
-    const { id } = req.params;
     const data = await listContacts();
-    console.log(data);
-    const find = data.find((item) => item.id === id);
-    if (!find) {
-      return res.status(404).json({
-        status: "error",
-        code: 404,
-        message: "Not found",
-      });
-    }
-    res.json({
-      status: "success",
-      code: 200,
-      data: {
-        find,
-      },
-    });
-    console.log(find);
+    // console.log(data);
+    const find = data.find((item) => item.id === contactId);
+
+    // console.log(find);
     return find;
   } catch (err) {
     throw err;
