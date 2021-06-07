@@ -5,6 +5,7 @@ const {
   listContacts,
   getContactById,
   addContact,
+  updateContact,
   removeContact,
 } = require("../index");
 
@@ -51,21 +52,67 @@ router.post("/", express.json(), async (req, res, next) => {
     return res.status(400).json({
       status: "error",
       code: 400,
-      message: "Missing some contact data",
+      message: "Missing some fields",
     });
   }
   await addContact(data);
   res.json({
-    status: "contact added",
+    status: "Contact added",
     code: 201,
     data: { result: data },
   });
 });
 
-router.delete("/id", async (req, res, next) => {
+router.put("/:contactId", express.json(), async (req, res, next) => {
   const { contactId } = req.params;
-  const result = await listContacts();
-  const remove = await removeContact(contactId);
+  //   console.log(contactId);
+  //   const updateContact = req.body;
+  const { name, email, phone } = req.body;
+  const newData = { contactId, name, email, phone };
+  const data = await listContacts();
+  const updated = await getContactById(contactId);
+  const index = data.findIndex(({ id }) => contactId === id);
+  if (index === -1) {
+    return res.status(404).json({
+      status: "error",
+      code: 404,
+      message: "Not found",
+    });
+  }
+  if (!newData.name || !newData.email || !newData.phone) {
+    return res.status(400).json({
+      status: "error",
+      code: 400,
+      message: "Missing some fields",
+    });
+  }
+  await updateContact(newData);
+  res.json({
+    status: "Contact updated",
+    code: 200,
+    data: { result: updated },
+  });
+});
+
+router.delete("/:contactId", async (req, res, next) => {
+  const { contactId } = req.params;
+  const data = await listContacts();
+  const index = data.findIndex(({ id }) => contactId === id);
+  //   console.log(index);
+  if (index === -1) {
+    return res.status(404).json({
+      status: "error",
+      code: 404,
+      message: "Not found",
+    });
+  }
+  await removeContact(contactId);
+  res.json({
+    status: "success",
+    code: 204,
+    message: "contact deleted",
+  });
+  //   console.log(data);
 });
 
 module.exports = router;

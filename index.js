@@ -18,7 +18,7 @@ const listContacts = async () => {
 };
 
 const getContactById = async (contactId) => {
-  console.log(contactId);
+  // console.log(contactId);
   try {
     const data = await listContacts();
     // console.log(data);
@@ -49,6 +49,20 @@ const addContact = async ({ name, email, phone }) => {
   }
 };
 
+const updateContact = async ({ contactId, name, email, phone }) => {
+  // console.log(contactId);
+  const newData = { name, email, phone };
+  // console.log(newData);
+  try {
+    let data = await listContacts();
+    const index = data.findIndex(({ id }) => contactId === id);
+    console.log(data[index].name);
+    data[index].name = "lulu";
+  } catch (err) {
+    throw err;
+  }
+};
+
 const removeContact = async (contactId) => {
   try {
     const data = await listContacts();
@@ -63,5 +77,6 @@ module.exports = {
   listContacts,
   getContactById,
   addContact,
+  updateContact,
   removeContact,
 };
