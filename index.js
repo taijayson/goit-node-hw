@@ -23,7 +23,6 @@ const getContactById = async (contactId) => {
     const data = await listContacts();
     // console.log(data);
     const find = data.find((item) => item.id === contactId);
-
     // console.log(find);
     return find;
   } catch (err) {
@@ -33,15 +32,16 @@ const getContactById = async (contactId) => {
 
 //===============ADD AND REMOVE CONTACTS==============//
 
-const addContact = async (id, name, email, phone) => {
+const addContact = async ({ name, email, phone }) => {
   try {
     const data = await listContacts();
     const newItem = {
       id: v4(),
-      name: name,
-      email: email,
-      phone: phone,
+      name,
+      email,
+      phone,
     };
+    // console.log(newItem);
     data.push(newItem);
     fs.writeFile(contactsPath, JSON.stringify(data));
   } catch (err) {
