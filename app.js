@@ -30,5 +30,5 @@ app.use((error, _, res, __) => {
 });
 
 app.listen(3000, () => {
-  console.log("run at 3000");
+  console.log("run at PORT:3000");
 });

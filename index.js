@@ -4,6 +4,8 @@ const { v4 } = require("uuid");
 
 const contactsPath = path.join(__dirname, "db", "contacts.json");
 
+const fsWrite = (data) => fs.writeFile(contactsPath, JSON.stringify(data));
+
 //===============GET CONTACTS==============//
 
 const listContacts = async () => {
@@ -18,12 +20,9 @@ const listContacts = async () => {
 };
 
 const getContactById = async (contactId) => {
-  // console.log(contactId);
   try {
     const data = await listContacts();
-    // console.log(data);
     const find = data.find((item) => item.id === contactId);
-    // console.log(find);
     return find;
   } catch (err) {
     throw err;
@@ -41,23 +40,22 @@ const addContact = async ({ name, email, phone }) => {
       email,
       phone,
     };
-    // console.log(newItem);
     data.push(newItem);
-    fs.writeFile(contactsPath, JSON.stringify(data));
+    fsWrite(data);
   } catch (err) {
     throw err;
   }
 };
 
 const updateContact = async ({ contactId, name, email, phone }) => {
-  // console.log(contactId);
-  const newData = { name, email, phone };
-  // console.log(newData);
+  const newData = { contactId, name, email, phone };
   try {
-    let data = await listContacts();
+    const data = await listContacts();
     const index = data.findIndex(({ id }) => contactId === id);
-    console.log(data[index].name);
-    data[index].name = "lulu";
+    data[index].name = newData.name;
+    data[index].email = newData.email;
+    data[index].phone = newData.phone;
+    fs.writeFile(contactsPath, JSON.stringify(data));
   } catch (err) {
     throw err;
   }
@@ -67,7 +65,7 @@ const removeContact = async (contactId) => {
   try {
     const data = await listContacts();
     const newData = data.filter(({ id }) => id !== contactId);
-    fs.writeFile(contactsPath, JSON.stringify(newData));
+    fsWrite(newData);
   } catch (err) {
     throw err;
   }
