@@ -16,7 +16,7 @@ const {
   getContactById,
   addContact,
   removeContact,
-} = require("./index");
+} = require("../db/index");
 
 const invokeAction = ({ action, id, name, email, phone }) => {
   switch (action) {
@@ -33,8 +33,7 @@ const invokeAction = ({ action, id, name, email, phone }) => {
       removeContact(id);
       break;
     default:
-      null;
-    // console.warn("\x1B[31m Unknown action type");
+      console.warn("\x1B[31m Unknown action type");
   }
 };
 invokeAction(argv);

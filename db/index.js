@@ -2,7 +2,7 @@ const fs = require("fs").promises;
 const path = require("path");
 const { v4 } = require("uuid");
 
-const contactsPath = path.join(__dirname, "db", "contacts.json");
+const contactsPath = path.join(__dirname, "contacts.json");
 
 const fsWrite = (data) => fs.writeFile(contactsPath, JSON.stringify(data));
 
@@ -55,7 +55,7 @@ const updateContact = async ({ contactId, name, email, phone }) => {
     data[index].name = newData.name;
     data[index].email = newData.email;
     data[index].phone = newData.phone;
-    fs.writeFile(contactsPath, JSON.stringify(data));
+    fsWrite(data);
   } catch (err) {
     throw err;
   }
