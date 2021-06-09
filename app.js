@@ -1,10 +1,23 @@
+const fsStream = require("fs");
 const express = require("express");
-// const morgan = require("morgan");
+const morgan = require("morgan");
+const path = require("path");
 const cors = require("cors");
 
 const api = require("./api");
 
 const app = express();
+
+const accessLogStream = fsStream.createWriteStream(
+  path.join(__dirname, "access.log"),
+  { flags: "a" }
+);
+
+const formatsLogger = app.get("env") === "development" ? "dev" : "short";
+
+app.use(morgan("combined", { stream: accessLogStream }));
+
+app.use(morgan(formatsLogger));
 
 app.use(cors());
 
@@ -21,7 +34,6 @@ app.use((_, res) => {
 app.use((error, _, res, __) => {
   const code = error.code || 500;
   const message = error.message || "Server error";
-  // const {code = 500, message = "Server error"} = error;
   res.status(code).json({
     status: "fail",
     code,
@@ -30,5 +42,5 @@ app.use((error, _, res, __) => {
 });
 
 app.listen(3000, () => {
-  console.log("run at PORT:3000");
+  console.log("Run at PORT:3000");
 });

@@ -101,7 +101,7 @@ router.put("/:contactId", express.json(), async (req, res, next) => {
     return res.status(400).json({
       status: "error",
       code: 400,
-      message: "Missing some fields",
+      message: "Need at least one field",
     });
   }
   await updateContact(newData);
