@@ -52,9 +52,16 @@ const updateContact = async ({ contactId, name, email, phone }) => {
   try {
     const data = await listContacts();
     const index = data.findIndex(({ id }) => contactId === id);
-    data[index].name = newData.name;
-    data[index].email = newData.email;
-    data[index].phone = newData.phone;
+    if (newData.name !== undefined) {
+      data[index].name = newData.name;
+    }
+    if (newData.email !== undefined) {
+      data[index].email = newData.email;
+    }
+    if (newData.phone !== undefined) {
+      data[index].phone = newData.phone;
+    }
+
     fsWrite(data);
   } catch (err) {
     throw err;

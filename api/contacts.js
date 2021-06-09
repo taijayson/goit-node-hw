@@ -77,8 +77,8 @@ router.put("/:contactId", express.json(), async (req, res, next) => {
   const { contactId } = req.params;
   const { name, email, phone } = req.body;
   const data = { name, email, phone };
-  const { error } = contactShema.validate(data);
 
+  const { error } = contactShema.validate(data);
   if (error !== undefined) {
     return res.status(400).json({
       status: "error",
@@ -86,6 +86,7 @@ router.put("/:contactId", express.json(), async (req, res, next) => {
       message: error.message,
     });
   }
+
   const newData = { contactId, name, email, phone };
   const contacts = await listContacts();
   const index = contacts.findIndex(({ id }) => contactId === id);
@@ -111,6 +112,7 @@ router.put("/:contactId", express.json(), async (req, res, next) => {
     data: { result: result },
   });
 });
+
 //=========================DELETE==========================//
 
 router.delete("/:contactId", async (req, res, next) => {
