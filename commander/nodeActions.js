@@ -16,7 +16,7 @@ const {
   getContactById,
   addContact,
   removeContact,
-} = require("./contacts");
+} = require("../db/index");
 
 const invokeAction = ({ action, id, name, email, phone }) => {
   switch (action) {

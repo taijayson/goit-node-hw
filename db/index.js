@@ -2,7 +2,9 @@ const fs = require("fs").promises;
 const path = require("path");
 const { v4 } = require("uuid");
 
-const contactsPath = path.join(__dirname, "db", "contacts.json");
+const contactsPath = path.join(__dirname, "contacts.json");
+
+const fsWrite = (data) => fs.writeFile(contactsPath, JSON.stringify(data));
 
 //===============GET CONTACTS==============//
 
@@ -29,17 +31,38 @@ const getContactById = async (contactId) => {
 
 //===============ADD AND REMOVE CONTACTS==============//
 
-const addContact = async (id, name, email, phone) => {
+const addContact = async ({ name, email, phone }) => {
   try {
     const data = await listContacts();
     const newItem = {
       id: v4(),
-      name: name,
-      email: email,
-      phone: phone,
+      name,
+      email,
+      phone,
     };
     data.push(newItem);
-    fs.writeFile(contactsPath, JSON.stringify(data));
+    fsWrite(data);
+  } catch (err) {
+    throw err;
+  }
+};
+
+const updateContact = async ({ contactId, name, email, phone }) => {
+  const newData = { contactId, name, email, phone };
+  try {
+    const data = await listContacts();
+    const index = data.findIndex(({ id }) => contactId === id);
+    if (newData.name !== undefined) {
+      data[index].name = newData.name;
+    }
+    if (newData.email !== undefined) {
+      data[index].email = newData.email;
+    }
+    if (newData.phone !== undefined) {
+      data[index].phone = newData.phone;
+    }
+
+    fsWrite(data);
   } catch (err) {
     throw err;
   }
@@ -49,7 +72,7 @@ const removeContact = async (contactId) => {
   try {
     const data = await listContacts();
     const newData = data.filter(({ id }) => id !== contactId);
-    fs.writeFile(contactsPath, JSON.stringify(newData));
+    fsWrite(newData);
   } catch (err) {
     throw err;
   }
@@ -59,5 +82,6 @@ module.exports = {
   listContacts,
   getContactById,
   addContact,
+  updateContact,
   removeContact,
 };
