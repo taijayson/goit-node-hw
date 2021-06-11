@@ -1,1 +1,3 @@
-const shemas = require("./shemas");
+const Contact = require("./contact");
+
+module.exports = { Contact };

@@ -1,1 +1,5 @@
-const mongoose = require("mongoose");
+const { Schema } = require("mongoose");
+
+const contactShema = Schema({});
+
+module.exports = contactShema;

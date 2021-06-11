@@ -1,8 +1,10 @@
 const fsStream = require("fs");
 const express = require("express");
+const mongoose = require("mongoose");
 const morgan = require("morgan");
 const path = require("path");
 const cors = require("cors");
+require("dotenv").config();
 
 const api = require("./api");
 
@@ -34,13 +36,29 @@ app.use((_, res) => {
 app.use((error, _, res, __) => {
   const code = error.code || 500;
   const message = error.message || "Server error";
-  res.status(code).json({
-    status: "fail",
-    code,
-    message,
-  });
+  res
+    .status(code)
+    .json({
+      status: "fail",
+      code,
+      message,
+    })
+    .then(console.log("Connection error"), process.exit(1));
 });
 
-app.listen(3000, () => {
-  console.log("Run at PORT:3000");
-});
+const { DB_HOST, PORT } = process.env;
+
+const port = PORT || 3000;
+
+mongoose
+  .connect(DB_HOST, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  })
+  .then(
+    app.listen(port, () => {
+      console.log(`Run at PORT:${port}`);
+    })
+  )
+  .then(console.log("Database connection successful"));
