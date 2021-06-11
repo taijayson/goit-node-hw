@@ -36,14 +36,11 @@ app.use((_, res) => {
 app.use((error, _, res, __) => {
   const code = error.code || 500;
   const message = error.message || "Server error";
-  res
-    .status(code)
-    .json({
-      status: "fail",
-      code,
-      message,
-    })
-    .then(console.log("Connection error"), process.exit(1));
+  res.status(code).json({
+    status: "fail",
+    code,
+    message,
+  });
 });
 
 const { DB_HOST, PORT } = process.env;
@@ -57,8 +54,16 @@ mongoose
     useCreateIndex: true,
   })
   .then(
+    () => {
+      console.log("Database connection successful");
+    },
+    (error) => {
+      // console.log(error);
+      console.log("Connection error"), process.exit(1);
+    }
+  )
+  .then(
     app.listen(port, () => {
       console.log(`Run at PORT:${port}`);
     })
-  )
-  .then(console.log("Database connection successful"));
+  );

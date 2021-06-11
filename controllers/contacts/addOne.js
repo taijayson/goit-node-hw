@@ -1,4 +1,4 @@
-const { addContact } = require("../../db");
+const { Contact } = require("../../models");
 
 const addOne = async (req, res, next) => {
   const { name, email, phone } = req.body;
@@ -11,19 +11,23 @@ const addOne = async (req, res, next) => {
   //       message: error.message,
   //     });
   //   }
-  if (!data.name || !data.email || !data.phone) {
-    return res.status(400).json({
-      status: "error",
-      code: 400,
-      message: "Missing some fields",
+  // if (!data.name || !data.email || !data.phone) {
+  //   return res.status(400).json({
+  //     status: "error",
+  //     code: 400,
+  //     message: "Missing some fields",
+  //   });
+  // }
+  try {
+    const result = await Contact.create(data);
+    res.json({
+      status: "Contact added",
+      code: 201,
+      data: { result },
     });
+  } catch (error) {
+    next(error);
   }
-  await addContact(data);
-  res.json({
-    status: "Contact added",
-    code: 201,
-    data: { result: data },
-  });
 };
 
 module.exports = addOne;
