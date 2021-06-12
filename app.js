@@ -15,11 +15,11 @@ const accessLogStream = fsStream.createWriteStream(
   { flags: "a" }
 );
 
-const formatsLogger = app.get("env") === "development" ? "dev" : "short";
+// const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
 app.use(morgan("combined", { stream: accessLogStream }));
 
-app.use(morgan(formatsLogger));
+// app.use(morgan(formatsLogger));
 
 app.use(cors());
 
@@ -52,6 +52,7 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
+    useFindAndModify: false,
   })
   .then(
     () => {
