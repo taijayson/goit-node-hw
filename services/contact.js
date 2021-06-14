@@ -5,7 +5,6 @@ const getAll = (query) => {
 };
 
 const getOne = (id) => {
-  console.log(id);
   return Contact.findById(id);
 };
 

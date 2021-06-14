@@ -14,33 +14,23 @@ const contactShema = Schema({
   },
   email: {
     type: String,
+    required: [true, "Whooopps! Set email for contact!"],
     unique: true,
     validate: {
       validator(value) {
         return /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(value);
       },
     },
-    required: [true, "Whooopps! Set email for contact!"],
   },
   phone: {
     type: String,
+    required: [true, "Whooopps! Set phone for contact!"],
     validate: {
       validator(value) {
         return /\b\d{3}[-.]?\d{3}[-.]?\d{2}[-.]?\d{2}\b/.test(value);
       },
     },
     unique: true,
-    required: [true, "Whooopps! Set phone for contact!"],
-  },
-  dateOfBirt: {
-    type: String,
-    validate: {
-      validator(value) {
-        return /^(0?[1-9]|1[012])[- /.](0?[1-9]|[12][0-9]|3[01])[- /.](19|20)?[0-9]{2}$/.test(
-          value
-        );
-      },
-    },
   },
   favorite: {
     type: Boolean,
