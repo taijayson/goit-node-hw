@@ -1,17 +1,15 @@
 const { contact: service } = require("../../services");
 
 const addOne = async (req, res, next) => {
-  const { name, email, phone } = req.body;
-  const data = { name, email, phone };
-  // if (!data.name || !data.email || !data.phone) {
-  //   return res.status(400).json({
-  //     status: "error",
-  //     code: 400,
-  //     message: "Missing some fields",
-  //   });
-  // }
   try {
-    const result = await service.addOne(data);
+    const result = await service.addOne(req.body);
+    if (!req.body.name || !req.body.email || !req.body.phone) {
+      return res.status(400).json({
+        status: "fail",
+        code: 400,
+        message: "missing some fields",
+      });
+    }
     res.json({
       status: "Contact added",
       code: 201,

@@ -11,7 +11,7 @@ router.post("/", express.json(), contacts.addOne);
 
 router.put("/:contactId", express.json(), contacts.updateOne);
 
-router.patch("/:contactId", express.json(), contacts.updateStatus);
+router.patch("/:contactId/favorite", express.json(), contacts.updateStatus);
 
 router.delete("/:contactId", contacts.removeOne);
 

@@ -13,11 +13,11 @@ const addOne = (body) => {
 };
 
 const updateOne = (id, body) => {
-  return Contact.findByIdAndUpdate(id, body);
+  return Contact.findByIdAndUpdate(id, body, { new: true });
 };
 
 const updateStatusForOne = (id, favorite) => {
-  return Contact.findByIdAndUpdate(id, favorite);
+  return Contact.findByIdAndUpdate(id, { favorite }, { new: true });
 };
 
 const removeOne = (id) => {

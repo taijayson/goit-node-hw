@@ -8,7 +8,7 @@ const contactShema = Schema({
     maxLength: 50,
     validate: {
       validator(value) {
-        return /^[A-Za-z0-9А-Яа-я]{1,40}$/.test(value);
+        return /^[A-Za-z0-9А-Яа-я ]{1,40}$/.test(value);
       },
     },
   },

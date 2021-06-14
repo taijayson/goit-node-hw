@@ -5,6 +5,13 @@ const updateStatusForOne = async (req, res, next) => {
   const { contactId } = req.params;
   try {
     const result = await service.updateStatusForOne(contactId, favorite);
+    if (favorite === undefined) {
+      return res.status(400).json({
+        status: "fail",
+        code: 400,
+        message: "missing field favorite",
+      });
+    }
     res.json({
       status: "success",
       code: 200,
