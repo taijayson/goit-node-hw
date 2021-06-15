@@ -1,8 +1,10 @@
 const fsStream = require("fs");
 const express = require("express");
+const mongoose = require("mongoose");
 const morgan = require("morgan");
 const path = require("path");
 const cors = require("cors");
+require("dotenv").config();
 
 const api = require("./api");
 
@@ -13,11 +15,7 @@ const accessLogStream = fsStream.createWriteStream(
   { flags: "a" }
 );
 
-const formatsLogger = app.get("env") === "development" ? "dev" : "short";
-
 app.use(morgan("combined", { stream: accessLogStream }));
-
-app.use(morgan(formatsLogger));
 
 app.use(cors());
 
@@ -41,6 +39,28 @@ app.use((error, _, res, __) => {
   });
 });
 
-app.listen(3000, () => {
-  console.log("Run at PORT:3000");
-});
+const { DB_HOST, PORT } = process.env;
+
+const port = PORT || 3000;
+
+mongoose
+  .connect(DB_HOST, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+  })
+  .then(
+    () => {
+      console.log("Database connection successful");
+    },
+    (error) => {
+      // console.log(error);
+      console.log("Connection error"), process.exit(1);
+    }
+  )
+  .then(
+    app.listen(port, () => {
+      console.log(`Run at PORT:${port}`);
+    })
+  );
