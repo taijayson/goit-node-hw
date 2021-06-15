@@ -1,6 +1,6 @@
 const { model } = require("mongoose");
 
-const { contactShema } = require("./shemas");
+const { contactShema } = require("./schemas");
 
 const Contact = model("contact", contactShema);
 

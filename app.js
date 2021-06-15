@@ -20,6 +20,7 @@ app.use(morgan("combined", { stream: accessLogStream }));
 app.use(cors());
 
 app.use("/api/contacts", api.contacts);
+app.use("/api/auth", api.auth);
 
 app.use((_, res) => {
   res.status(404).json({
