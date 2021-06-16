@@ -36,6 +36,10 @@ const contactShema = Schema({
     type: Boolean,
     default: false,
   },
+  // owner: {
+  //   type: SchemaTypes.ObjectId,
+  //   ref: "user",
+  // },
 });
 
 module.exports = contactShema;

@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const morgan = require("morgan");
 const path = require("path");
 const cors = require("cors");
+
 require("dotenv").config();
 
 const api = require("./api");
@@ -19,8 +20,8 @@ app.use(morgan("combined", { stream: accessLogStream }));
 
 app.use(cors());
 
+app.use("/api/users", api.users);
 app.use("/api/contacts", api.contacts);
-app.use("/api/auth", api.auth);
 
 app.use((_, res) => {
   res.status(404).json({
