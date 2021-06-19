@@ -1,3 +1,3 @@
-const getAuth = require("../users/getAuth");
+const getProfile = require("./getProfile");
 
-module.exports = { getAuth };
+module.exports = { getProfile };

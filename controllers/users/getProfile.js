@@ -3,7 +3,7 @@ require("dotenv").config();
 
 const { users: service } = require("../../services");
 
-const getAuth = async (req, res, next) => {
+const getProfile = async (req, res, next) => {
   try {
     const { TOKEN_KEY } = process.env;
     const [, token] = req.headers.Authorization.split(" ");
@@ -24,4 +24,4 @@ const getAuth = async (req, res, next) => {
   }
 };
 
-module.exports = getAuth;
+module.exports = getProfile;
