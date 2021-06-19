@@ -1,4 +1,4 @@
-const { Schema } = require("mongoose");
+const { Schema, ObjectId } = require("mongoose");
 
 const contactShema = Schema({
   name: {
@@ -36,10 +36,10 @@ const contactShema = Schema({
     type: Boolean,
     default: false,
   },
-  // owner: {
-  //   type: SchemaTypes.ObjectId,
-  //   ref: "user",
-  // },
+  owner: {
+    type: ObjectId,
+    ref: "user",
+  },
 });
 
 module.exports = contactShema;

@@ -1,5 +1,3 @@
-const signup = require("./signup");
-const login = require("./login");
-const getAuth = require("./getAuth");
+const getAuth = require("../users/getAuth");
 
-module.exports = { signup, login, getAuth };
+module.exports = { getAuth };
