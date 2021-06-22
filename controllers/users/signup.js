@@ -1,12 +1,12 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-const { user: service } = require("../../services");
+const { users: services } = require("../../services");
 
 const signup = async (req, res, next) => {
   const { email, password } = req.body;
   try {
-    const result = await service.getOne({ email });
+    const result = await services.getOne({ email });
     if (result) {
       return res.status(409).json({
         status: "error",
@@ -14,17 +14,23 @@ const signup = async (req, res, next) => {
         message: "User already register",
       });
     }
-    const data = await service.addOne({ email, password });
-    const { TOKEN_KEY } = process.env;
-    const payload = {
-      id: data.id,
-    };
-    const token = jwt.sign(payload, TOKEN_KEY);
+    const user = await service.addOne({ email, password });
+    // const { TOKEN_KEY } = process.env;
+    // const payload = {
+    //   id: data.id,
+    // };
+    // const token = jwt.sign(payload, TOKEN_KEY);
+    // console.log(user.email);
     res.status(201).json({
       status: "success",
       code: 201,
       message: "Successfully added",
-      data: { token },
+      data: {
+        user: {
+          email: user.email,
+          subscription: user.subscription,
+        },
+      },
     });
   } catch (error) {
     next(error);

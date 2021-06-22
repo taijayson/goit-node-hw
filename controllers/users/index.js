@@ -1,3 +1,5 @@
-const getProfile = require("./getProfile");
+const signup = require("./signup");
+const login = require("./login");
+const getCurrent = require("./getCurrent");
 
-module.exports = { getProfile };
+module.exports = { signup, login, getCurrent };

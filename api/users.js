@@ -8,6 +8,6 @@ router.post("/signup", express.json(), controllers.signup);
 
 router.post("/login", express.json(), controllers.login);
 
-router.get("/profile", useAuth, controllers.getProfile);
+router.get("/current", controllers.getCurrent);
 
 module.exports = router;

@@ -5,24 +5,24 @@ const userSchema = Schema({
   email: {
     type: String,
     require: [true, "Need mail"],
-    // unique: true,
-    // validate: {
-    //   validator(value) {
-    //     return /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(value);
-    //   },
-    // },
+    unique: true,
+    validate: {
+      validator(value) {
+        return /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(value);
+      },
+    },
   },
   password: {
     type: String,
     require: [true, "Need pass"],
     minLength: 8,
-    // validate: {
-    //   validator(value) {
-    //     return /^.*(?=.{6,})(?=.*d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*? ]).*$/.test(
-    //       value
-    //     );
-    //   },
-    // },
+    validate: {
+      validator(value) {
+        return /^.*(?=.{6,})(?=.*d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*? ]).*$/.test(
+          value
+        );
+      },
+    },
   },
   subscription: {
     type: String,

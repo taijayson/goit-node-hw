@@ -1,10 +1,10 @@
-const { contact: service } = require("../../services");
+const { contacts: services } = require("../../services");
 
 const updateStatusForOne = async (req, res, next) => {
   const { favorite } = req.body;
   const { contactId } = req.params;
   try {
-    const result = await service.updateStatusForOne(contactId, favorite);
+    const result = await services.updateStatusForOne(contactId, favorite);
     if (favorite === undefined) {
       return res.status(400).json({
         status: "fail",

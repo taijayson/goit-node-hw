@@ -6,6 +6,7 @@ const path = require("path");
 const cors = require("cors");
 
 require("dotenv").config();
+require("./configs/config-passport");
 
 const api = require("./api");
 
@@ -57,7 +58,6 @@ mongoose
       console.log("Database connection successful");
     },
     (error) => {
-      // console.log(error);
       console.log("Connection error"), process.exit(1);
     }
   )

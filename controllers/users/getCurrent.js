@@ -1,14 +1,16 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-const { users: service } = require("../../services");
+const { users: services } = require("../../services");
 
-const getProfile = async (req, res, next) => {
+const getCurrent = async (req, res, next) => {
   try {
     const { TOKEN_KEY } = process.env;
     const [, token] = req.headers.Authorization.split(" ");
+    console.log(token);
+    console.log(TOKEN_KEY);
     const { id } = jwt.verify(token, TOKEN_KEY);
-    req.user = await service.getById(id);
+    req.user = await services.getById(id);
     res.json({
       status: "success",
       code: 200,
@@ -24,4 +26,4 @@ const getProfile = async (req, res, next) => {
   }
 };
 
-module.exports = getProfile;
+module.exports = getCurrent;

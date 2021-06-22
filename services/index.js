@@ -1,4 +1,4 @@
-const contact = require("./contact");
-const user = require("./user");
+const contacts = require("./contacts");
+const users = require("./users");
 
-module.exports = { contact, user };
+module.exports = { contacts, users };

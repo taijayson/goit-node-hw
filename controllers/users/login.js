@@ -1,13 +1,14 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-const { users: service } = require("../../services");
+const { users: services } = require("../../services");
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
   try {
-    const user = await service.getOne({ email });
-    if (!user || user.validPassword(password)) {
+    const user = await services.getOne({ email });
+    // console.log(user);
+    if (!user || !user.validPassword(password)) {
       return res.status(401).json({
         status: "error",
         code: 401,

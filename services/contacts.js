@@ -1,7 +1,6 @@
 const { Contact } = require("../models");
 
 const getAll = (query) => {
-  // console.log(query);
   return Contact.find(query);
 };
 
