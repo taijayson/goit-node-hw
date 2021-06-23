@@ -6,9 +6,7 @@ const { users: services } = require("../../services");
 const getCurrent = async (req, res, next) => {
   try {
     const { TOKEN_KEY } = process.env;
-    const [, token] = req.headers.Authorization.split(" ");
-    console.log(token);
-    console.log(TOKEN_KEY);
+    const [, token] = req.headers.authorization.split(" ");
     const { id } = jwt.verify(token, TOKEN_KEY);
     req.user = await services.getById(id);
     res.json({
@@ -16,7 +14,7 @@ const getCurrent = async (req, res, next) => {
       code: 200,
       data: req.user,
     });
-    next();
+    // next();
   } catch (error) {
     res.status(401).json({
       status: "error",

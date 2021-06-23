@@ -6,11 +6,12 @@ const path = require("path");
 const cors = require("cors");
 
 require("dotenv").config();
-require("./configs/config-passport");
 
 const api = require("./api");
 
 const app = express();
+
+require("./configs/config-passport");
 
 const accessLogStream = fsStream.createWriteStream(
   path.join(__dirname, "access.log"),
