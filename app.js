@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const morgan = require("morgan");
 const path = require("path");
 const cors = require("cors");
+const passport = require("passport");
 
 require("dotenv").config();
 
@@ -34,6 +35,7 @@ app.use((_, res) => {
 });
 
 app.use((error, _, res, __) => {
+  console.log(error);
   const code = error.code || 500;
   const message = error.message || "Server error";
   res.status(code).json({

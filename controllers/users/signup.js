@@ -11,16 +11,10 @@ const signup = async (req, res, next) => {
       return res.status(409).json({
         status: "error",
         code: 409,
-        message: "User already register",
+        message: "Email in use",
       });
     }
-    const user = await service.addOne({ email, password });
-    // const { TOKEN_KEY } = process.env;
-    // const payload = {
-    //   id: data.id,
-    // };
-    // const token = jwt.sign(payload, TOKEN_KEY);
-    // console.log(user.email);
+    const user = await services.addOne({ email, password });
     res.status(201).json({
       status: "success",
       code: 201,
@@ -33,6 +27,11 @@ const signup = async (req, res, next) => {
       },
     });
   } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      code: 400,
+      message: "Missing some fields",
+    });
     next(error);
   }
 };

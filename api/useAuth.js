@@ -6,12 +6,12 @@ const useAuth = (req, res, next) => {
       return res.status(401).json({
         status: "error",
         code: 401,
-        message: "Unauthorized",
+        message: "Not authorized",
       });
     }
     req.user = user;
     next();
-  });
+  })(req, res, next);
 };
 
 module.exports = useAuth;

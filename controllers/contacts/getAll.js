@@ -2,7 +2,6 @@ const { contacts: services } = require("../../services");
 
 const getAll = async (req, res, next) => {
   const { query } = req;
-  // console.log(query);
   try {
     const result = await services.getAll(query);
     res.json({
@@ -10,7 +9,9 @@ const getAll = async (req, res, next) => {
       code: 200,
       data: result,
     });
-  } catch (error) {}
+  } catch (error) {
+    next(error);
+  }
 };
 
 module.exports = getAll;

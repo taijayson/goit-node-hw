@@ -10,4 +10,6 @@ router.post("/login", express.json(), controllers.login);
 
 router.get("/current", useAuth, controllers.getCurrent);
 
+router.post("/logout", useAuth, controllers.logout);
+
 module.exports = router;

@@ -7,7 +7,6 @@ const login = async (req, res, next) => {
   const { email, password } = req.body;
   try {
     const user = await services.getOne({ email });
-    // console.log(user);
     if (!user || !user.validPassword(password)) {
       return res.status(401).json({
         status: "error",
@@ -20,12 +19,24 @@ const login = async (req, res, next) => {
     };
     const { TOKEN_KEY } = process.env;
     const token = jwt.sign(payload, TOKEN_KEY);
+    user.token = token;
     res.json({
       status: "success",
       code: 200,
-      data: { token },
+      data: {
+        token: user.token,
+        user: {
+          email: user.email,
+          subscription: user.subscription,
+        },
+      },
     });
   } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      code: 400,
+      message: "Missing some fields",
+    });
     next(error);
   }
 };

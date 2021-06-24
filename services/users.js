@@ -14,8 +14,13 @@ const addOne = ({ email, password }) => {
   return newUser.save();
 };
 
+const updateOne = (id, data) => {
+  return User.findByIdAndUpdate(id, data);
+};
+
 module.exports = {
   getOne,
   getById,
   addOne,
+  updateOne,
 };
