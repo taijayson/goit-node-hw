@@ -4,11 +4,15 @@ const mongoose = require("mongoose");
 const morgan = require("morgan");
 const path = require("path");
 const cors = require("cors");
+const passport = require("passport");
+
 require("dotenv").config();
 
 const api = require("./api");
 
 const app = express();
+
+require("./configs/config-passport");
 
 const accessLogStream = fsStream.createWriteStream(
   path.join(__dirname, "access.log"),
@@ -19,6 +23,7 @@ app.use(morgan("combined", { stream: accessLogStream }));
 
 app.use(cors());
 
+app.use("/api/users", api.users);
 app.use("/api/contacts", api.contacts);
 
 app.use((_, res) => {
@@ -30,6 +35,7 @@ app.use((_, res) => {
 });
 
 app.use((error, _, res, __) => {
+  console.log(error);
   const code = error.code || 500;
   const message = error.message || "Server error";
   res.status(code).json({
@@ -55,7 +61,6 @@ mongoose
       console.log("Database connection successful");
     },
     (error) => {
-      // console.log(error);
       console.log("Connection error"), process.exit(1);
     }
   )
