@@ -1,10 +1,10 @@
+const fs = require("fs").promises;
 const fsStream = require("fs");
 const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 const path = require("path");
 const cors = require("cors");
-const passport = require("passport");
 
 require("dotenv").config();
 
