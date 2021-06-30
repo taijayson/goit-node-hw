@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 const morgan = require("morgan");
 const path = require("path");
 const cors = require("cors");
+const multer = require("multer");
+// const { avatar, upload } = require("./api/avatar");
 
 require("dotenv").config();
 
@@ -25,6 +27,53 @@ app.use(cors());
 
 app.use("/api/users", api.users);
 app.use("/api/contacts", api.contacts);
+
+// app.post("/avatars", upload.single("avatar"), avatar);
+
+// app.use(express.static("public"));
+// app.use(express.static("avatars"));
+
+const tempDir = path.join(process.cwd(), "public");
+const uploadDir = path.join(process.cwd(), "public/avatars");
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, tempDir);
+  },
+  filename: (req, file, cb) => {
+    // console.log(file);
+    cb(null, file.originalname);
+  },
+  limits: { fileSize: 10240000 },
+});
+
+const upload = multer({
+  storage,
+});
+// console.log(upload);
+
+app.post("/avatars", upload.single("avatar"), async (req, res, next) => {
+  console.log(req.file);
+  const { path: tempName, originalname } = req.file;
+  // console.log(tempName);
+  const fileName = path.join(uploadDir, originalname);
+
+  try {
+    await fs.rename(tempName, fileName);
+    res.json({
+      status: "success",
+      code: 200,
+      data: {
+        result: {
+          avatar: fileName,
+        },
+      },
+    });
+  } catch (error) {
+    await fs.unlink(tempName);
+    console.log("Wrong!Wrong!");
+  }
+});
 
 app.use((_, res) => {
   res.status(404).json({
