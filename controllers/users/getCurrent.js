@@ -1,4 +1,3 @@
-const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const getCurrent = async (req, res, next) => {
