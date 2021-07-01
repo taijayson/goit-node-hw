@@ -1,5 +1,4 @@
 const { User } = require("../models");
-// const gravatar = require("gravatar");
 
 const getOne = (filter) => {
   return User.findOne(filter);

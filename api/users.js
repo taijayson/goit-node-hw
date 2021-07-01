@@ -12,4 +12,11 @@ router.get("/current", useAuth, controllers.getCurrent);
 
 router.post("/logout", useAuth, controllers.logout);
 
+router.post(
+  "/avatars",
+  useAuth,
+  controllers.avatar.upload.single("avatar"),
+  controllers.avatar.avatarUpload
+);
+
 module.exports = router;
