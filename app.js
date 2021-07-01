@@ -4,7 +4,6 @@ const mongoose = require("mongoose");
 const morgan = require("morgan");
 const path = require("path");
 const cors = require("cors");
-const passport = require("passport");
 
 require("dotenv").config();
 
@@ -25,6 +24,8 @@ app.use(cors());
 
 app.use("/api/users", api.users);
 app.use("/api/contacts", api.contacts);
+
+app.use(express.static("public"));
 
 app.use((_, res) => {
   res.status(404).json({

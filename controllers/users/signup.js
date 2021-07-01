@@ -1,5 +1,4 @@
-const jwt = require("jsonwebtoken");
-require("dotenv").config();
+const gravatar = require("gravatar");
 
 const { users: services } = require("../../services");
 
@@ -14,7 +13,8 @@ const signup = async (req, res, next) => {
         message: "Email in use",
       });
     }
-    const user = await services.addOne({ email, password });
+    const avatarUrl = gravatar.url(email).substr(2);
+    const user = await services.addOne({ email, password, avatarUrl });
     res.status(201).json({
       status: "success",
       code: 201,
