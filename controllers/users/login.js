@@ -18,7 +18,7 @@ const login = async (req, res, next) => {
       return res.status(400).json({
         status: "fail",
         code: 400,
-        message: "Validation need",
+        message: "Need email verification",
       });
     }
     const payload = {

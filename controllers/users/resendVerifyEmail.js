@@ -4,7 +4,6 @@ const sendMail = require("../../utils");
 const resend = async (req, res, next) => {
   const { email } = req.body;
   const user = await services.getOne({ email });
-  //   console.log(user);
   try {
     if (!email) {
       return res.status(400).json({
@@ -27,8 +26,7 @@ const resend = async (req, res, next) => {
         message: "Verification has already been passed",
       });
     }
-    // console.log(user.verifyToken);
-    await sendMail({ verifyToken: user.verifyToken });
+    await sendMail(email, user.verifyToken);
     res.status(200).json({
       status: "success",
       code: 200,
