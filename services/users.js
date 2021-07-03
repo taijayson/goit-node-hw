@@ -8,8 +8,8 @@ const getById = (id) => {
   return User.findById(id);
 };
 
-const addOne = ({ email, password, avatarUrl }) => {
-  const newUser = new User({ email, avatarUrl });
+const addOne = ({ email, password, avatarUrl, verifyToken }) => {
+  const newUser = new User({ email, avatarUrl, verifyToken });
   newUser.setPassword(password);
   return newUser.save();
 };

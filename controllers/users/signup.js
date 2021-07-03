@@ -1,6 +1,8 @@
 const gravatar = require("gravatar");
+const { v4 } = require("uuid");
 
 const { users: services } = require("../../services");
+const sendMail = require("../../utils");
 
 const signup = async (req, res, next) => {
   const { email, password } = req.body;
@@ -13,8 +15,16 @@ const signup = async (req, res, next) => {
         message: "Email in use",
       });
     }
+    const verifyToken = v4();
+    sendMail(verifyToken);
+    console.log(verifyToken);
     const avatarUrl = gravatar.url(email).substr(2);
-    const user = await services.addOne({ email, password, avatarUrl });
+    const user = await services.addOne({
+      email,
+      password,
+      avatarUrl,
+      verifyToken,
+    });
     res.status(201).json({
       status: "success",
       code: 201,
