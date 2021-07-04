@@ -19,4 +19,8 @@ router.post(
   controllers.avatar.avatarUpload
 );
 
+router.get("/verify/:verifyToken", controllers.verify);
+
+router.post("/verify", express.json(), controllers.resend);
+
 module.exports = router;

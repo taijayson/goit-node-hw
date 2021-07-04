@@ -14,6 +14,13 @@ const login = async (req, res, next) => {
         message: "Invalid email or password",
       });
     }
+    if (user.verify === false) {
+      return res.status(400).json({
+        status: "fail",
+        code: 400,
+        message: "Need email verification",
+      });
+    }
     const payload = {
       id: user._id,
     };

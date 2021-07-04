@@ -1,6 +1,8 @@
 const gravatar = require("gravatar");
+const { v4 } = require("uuid");
 
 const { users: services } = require("../../services");
+const sendMail = require("../../utils");
 
 const signup = async (req, res, next) => {
   const { email, password } = req.body;
@@ -13,8 +15,22 @@ const signup = async (req, res, next) => {
         message: "Email in use",
       });
     }
+    if (!email || !password) {
+      return res.status(400).json({
+        status: "fail",
+        code: 400,
+        message: "Missing some fields",
+      });
+    }
+    const verifyToken = v4();
+    await sendMail(email, verifyToken);
     const avatarUrl = gravatar.url(email).substr(2);
-    const user = await services.addOne({ email, password, avatarUrl });
+    const user = await services.addOne({
+      email,
+      password,
+      avatarUrl,
+      verifyToken,
+    });
     res.status(201).json({
       status: "success",
       code: 201,
@@ -27,11 +43,6 @@ const signup = async (req, res, next) => {
       },
     });
   } catch (error) {
-    res.status(400).json({
-      status: "fail",
-      code: 400,
-      message: "Missing some fields",
-    });
     next(error);
   }
 };
